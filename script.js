@@ -55,3 +55,72 @@ document.getElementById('check-quiz-btn').addEventListener('click', () => {
     
     window.quizScore = score;
 });
+
+// --- 2. Drag & Drop Logic ---
+const correctOrder = ['item1', 'item2', 'item3', 'item4', 'item5'];
+let draggedItem = null;
+
+const dropZone = document.getElementById('drop-zone');
+const draggables = document.querySelectorAll('.draggable');
+
+draggables.forEach(item => {
+    item.addEventListener('dragstart', () => {
+        draggedItem = item;
+        setTimeout(() => item.classList.add('dragging'), 0);
+    });
+    
+    item.addEventListener('dragend', () => {
+        setTimeout(() => item.classList.remove('dragging'), 0);
+        draggedItem = null;
+    });
+});
+
+dropZone.addEventListener('dragover', e => {
+    e.preventDefault();
+    dropZone.classList.add('drag-over');
+    const afterElement = getDragAfterElement(dropZone, e.clientX);
+    if (afterElement == null) {
+        dropZone.appendChild(draggedItem);
+    } else {
+        dropZone.insertBefore(draggedItem, afterElement);
+    }
+});
+
+dropZone.addEventListener('dragleave', () => {
+    dropZone.classList.remove('drag-over');
+});
+
+dropZone.addEventListener('drop', () => {
+    dropZone.classList.remove('drag-over');
+});
+
+function getDragAfterElement(container, x) {
+    const draggableElements = [...container.querySelectorAll('.draggable:not(.dragging)')];
+    
+    return draggableElements.reduce((closest, child) => {
+        const box = child.getBoundingClientRect();
+        const offset = x - box.left - box.width / 2;
+        if (offset < 0 && offset > closest.offset) {
+            return { offset: offset, element: child };
+        } else {
+            return closest;
+        }
+    }, { offset: Number.NEGATIVE_INFINITY }).element;
+}
+
+document.getElementById('check-drag-btn').addEventListener('click', () => {
+    const currentOrder = Array.from(dropZone.children).map(child => child.id);
+    const isCorrect = JSON.stringify(currentOrder) === JSON.stringify(correctOrder);
+    
+    const resultBox = document.getElementById('drag-result');
+    if (isCorrect) {
+        resultBox.textContent = "Świetnie! Kolejność poprawna. (+3 pkt)";
+        resultBox.style.backgroundColor = '#d4edda';
+        window.dragScore = 3;
+    } else {
+        resultBox.textContent = "Błąd. Spróbuj ponownie. (0 pkt)";
+        resultBox.style.backgroundColor = '#f8d7da';
+        window.dragScore = 0;
+    }
+    resultBox.classList.remove('hidden');
+});
