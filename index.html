@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kotlin E-Learning Mini App</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Kotlin Mastery: Mini E-Learning</h1>
+        <p>Zdobądź wiedzę o funkcjach w Kotlinie!</p>
+    </header>
+
+    <main>
+        <!-- 1. Treści Edukacyjne -->
+        <section id="theory-section" class="module">
+            <h2>1. Teoria: Funkcje w Kotlinie</h2>
+            <div class="content-box">
+                <p>Funkcje w Kotlinie są definiowane przy użyciu słowa kluczowego <code>fun</code>. Oto podstawowa składnia:</p>
+                <pre><code>fun nazwaFunkcji(parametr: Typ): TypZwrotny {
+    // ciało funkcji
+    return wynik
+}</code></pre>
+                <p>Kotlin pozwala na funkcje z domyślnymi argumentami, funkcje jednolinijkowe (expression body) oraz funkcje wyższego rzędu.</p>
+            </div>
+        </section>
+
+        <!-- 2. Quiz ABCD -->
+        <section id="quiz-section" class="module">
+            <h2>2. Quiz Wiedzy</h2>
+            <div id="quiz-container">
+                <!-- Pytania będą generowane przez JS -->
+            </div>
+            <button id="check-quiz-btn" class="btn">Sprawdź odpowiedzi</button>
+            <div id="quiz-result" class="result-box hidden"></div>
+        </section>
+
+        <!-- 3. Bloczki (Drag & Drop) -->
+        <section id="drag-section" class="module">
+            <h2>3. Uporządkuj Kod (Drag & Drop)</h2>
+            <p>Pociągnij elementy, aby ułożyć poprawną kolejność definicji funkcji:</p>
+            <div class="drop-zone" id="drop-zone">
+                <!-- Miejsce na upuszczenie -->
+            </div>
+            <div class="draggable-items" id="draggable-items">
+                <div class="draggable" draggable="true" id="item1">fun</div>
+                <div class="draggable" draggable="true" id="item2">nazwaFunkcji()</div>
+                <div class="draggable" draggable="true" id="item3">{</div>
+                <div class="draggable" draggable="true" id="item4">return "Wynik"</div>
+                <div class="draggable" draggable="true" id="item5">}</div>
+            </div>
+            <button id="check-drag-btn" class="btn">Sprawdź kolejność</button>
+            <div id="drag-result" class="result-box hidden"></div>
+        </section>
+
+        <!-- 4. Uzupełnianie brakujących fragmentów -->
+        <section id="fill-section" class="module">
+            <h2>4. Uzupełnij Kod</h2>
+            <p>Wpisz brakujące słowa kluczowe w odpowiednie pola:</p>
+            <div class="code-fill">
+                <p><span id="label1">Definicja:</span> <input type="text" id="fill1" placeholder="..."> suma(a: Int, b: Int): Int {</p>
+                <p><span id="label2">Ciało:</span>     val wynik = a + b</p>
+                <p><span id="label3">Zwrot:</span>     <input type="text" id="fill2" placeholder="..."> wynik</p>
+                <p>}</p>
+            </div>
+            <button id="check-fill-btn" class="btn">Sprawdź</button>
+            <div id="fill-result" class="result-box hidden"></div>
+        </section>
+
+        <!-- 5. Fiszki (Flashcards) -->
+        <section id="flashcards-section" class="module">
+            <h2>5. Fiszki Terminologiczne</h2>
+            <div class="flashcards-container">
+                <div class="flashcard" onclick="flipCard(this)">
+                    <div class="front"><h3>Expression Body</h3></div>
+                    <div class="back"><p>Skrócona składnia funkcji, gdzie wynik jest bezpośrednio po znaku równości (np. `fun f() = 1`).</p></div>
+                </div>
+                <div class="flashcard" onclick="flipCard(this)">
+                    <div class="front"><h3>Default Args</h3></div>
+                    <div class="back"><p>Możliwość przypisania wartości domyślnej parametrom w deklaracji funkcji.</p></div>
+                </div>
+                <div class="flashcard" onclick="flipCard(this)">
+                    <div class="front"><h3>Unit</h3></div>
+                    <div class="back"><p>Typ zwracany przez funkcję, która nic nie zwraca (odpowiednik void w innych językach).</p></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 6. Podsumowanie i Ocena -->
+        <section id="summary-section" class="module">
+            <h2>6. Podsumowanie</h2>
+            <div id="final-score-display">
+                <p>Twój wynik: <span id="total-points">0</span> / <span id="max-points">0</span></p>
+                <p>Twoja ocena: <strong id="grade-display">-</strong></p>
+            </div>
+            <button id="calculate-grade-btn" class="btn btn-primary">Oblicz Ocenę Końcową</button>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Kotlin E-Learning App</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
