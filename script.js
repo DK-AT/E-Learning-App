@@ -124,3 +124,76 @@ document.getElementById('check-drag-btn').addEventListener('click', () => {
     }
     resultBox.classList.remove('hidden');
 });
+// --- 3. Fill in Blanks Logic ---
+document.getElementById('check-fill-btn').addEventListener('click', () => {
+    const val1 = document.getElementById('fill1').value.trim().toLowerCase();
+    const val2 = document.getElementById('fill2').value.trim().toLowerCase();
+    
+    let score = 0;
+    if (val1 === 'fun') score++;
+    if (val2 === 'return') score++;
+    
+    const resultBox = document.getElementById('fill-result');
+    resultBox.textContent = `Uzupełnianie: ${score}/2 punktów`;
+    resultBox.style.backgroundColor = score === 2 ? '#d4edda' : '#f8d7da';
+    resultBox.classList.remove('hidden');
+    window.fillScore = score;
+});
+
+// --- 4. Flashcards Logic ---
+function flipCard(card) {
+    card.classList.toggle('flipped');
+    // Prosta logika: jeśli użytkownik odwrócił wszystkie 3, daje punkty
+    const flippedCount = document.querySelectorAll('.flashcard.flipped').length;
+    if (flippedCount === 3) {
+        window.flashcardScore = 3;
+    } else {
+        window.flashcardScore = 0;
+    }
+}
+
+// --- 5. Podsumowanie i Ocena ---
+document.getElementById('calculate-grade-btn').addEventListener('click', () => {
+    // Pobieranie wyników (domyślnie 0 jeśli nie sprawdzono)
+    const qScore = window.quizScore || 0;
+    const dScore = window.dragScore || 0;
+    const fScore = window.fillScore || 0;
+    const fcScore = window.flashcardScore || 0;
+    
+    const currentTotal = qScore + dScore + fScore + fcScore;
+    const maxTotal = 11; // 3 + 3 + 2 + 3
+    
+    document.getElementById('total-points').textContent = currentTotal;
+    document.getElementById('max-points').textContent = maxTotal;
+    
+    const percentage = (currentTotal / maxTotal) * 100;
+    let grade = "";
+    let gradeColor = "";
+
+    if (percentage <= 50) {
+        grade = "2.0 (Niedostateczny)";
+        gradeColor = "#f44336";
+    } else if (percentage <= 60) {
+        grade = "3.0 (Dostateczny)";
+        gradeColor = "#ff9800";
+    } else if (percentage <= 70) {
+        grade = "3.5 (Dostateczny plus)";
+        gradeColor = "#ffc107";
+    } else if (percentage <= 80) {
+        grade = "4.0 (Dobry)";
+        gradeColor = "#8bc34a";
+    } else if (percentage <= 90) {
+        grade = "4.5 (Dobry plus)";
+        gradeColor = "#4caf50";
+    } else {
+        grade = "5.0 (Bardzo dobry)";
+        gradeColor = "#2e7d32";
+    }
+
+    const gradeDisplay = document.getElementById('grade-display');
+    gradeDisplay.textContent = grade;
+    gradeDisplay.style.color = gradeColor;
+});
+
+// Inicjalizacja
+renderQuiz();
